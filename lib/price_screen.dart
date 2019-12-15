@@ -1,4 +1,5 @@
 import 'package:bitcoin_ticker/coin_data.dart';
+import 'package:bitcoin_ticker/services/currency.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
@@ -9,7 +10,29 @@ class PriceScreen extends StatefulWidget {
 }
 
 class _PriceScreenState extends State<PriceScreen> {
+  CurrencyModel currencyModel = CurrencyModel();
   String selectedCurrency = 'USD';
+  String baseCurrency = 'BTC';
+  double currencyValue = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    var currencyData =
+        currencyModel.getCurrencyValue(baseCurrency + selectedCurrency);
+    updateUI(currencyData);
+    print(currencyData);
+  }
+
+  void updateUI(dynamic data) {
+    if (data == null) {
+      currencyValue = 0;
+      return;
+    } else {
+//      currencyValue = data['last'];
+      print(currencyValue);
+    }
+  }
 
   DropdownButton<String> androidDropdown() {
     List<DropdownMenuItem<String>> dropdownItems = [];
